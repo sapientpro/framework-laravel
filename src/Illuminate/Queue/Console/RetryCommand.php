@@ -66,7 +66,7 @@ class RetryCommand extends Command
 
                     $this->laravel['queue.failer']->forget($id);
                 } finally {
-                    if ($withoutJobOverlapping && $lock) {
+                    if ($lock) {
                         $lock->release();
                     }
                 }
