@@ -163,14 +163,16 @@ class CacheCommandMutexTest extends TestCase
 
     public function testCommandMutexNameWithoutIsolatedMutexNameMethod()
     {
+        $this->mockUsingCacheStore();
+
         $this->cacheRepository->shouldReceive('getStore')
             ->with('test')
             ->andReturn($this->cacheRepository);
 
         $this->cacheRepository->shouldReceive('add')
             ->once()
-            ->withArgs(function($key) {
-                $this->assertEquals('framework/command-command-name', $key);
+            ->withArgs(function ($key) {
+                $this->assertEquals('framework'.DIRECTORY_SEPARATOR.'command-command-name', $key);
 
                 return true;
             })
@@ -191,14 +193,16 @@ class CacheCommandMutexTest extends TestCase
             }
         };
 
+        $this->mockUsingCacheStore();
+
         $this->cacheRepository->shouldReceive('getStore')
             ->with('test')
             ->andReturn($this->cacheRepository);
 
         $this->cacheRepository->shouldReceive('add')
             ->once()
-            ->withArgs(function($key) {
-                $this->assertEquals('framework/command-command-name-isolated', $key);
+            ->withArgs(function ($key) {
+                $this->assertEquals('framework'.DIRECTORY_SEPARATOR.'command-command-name-isolated', $key);
 
                 return true;
             })
